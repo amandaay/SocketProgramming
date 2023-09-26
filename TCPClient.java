@@ -29,7 +29,11 @@ public class TCPClient {
             DataOutputStream out = new DataOutputStream(client.getOutputStream());
             System.out.println("Enter text to be reversed: ");
             String userInput = System.console().readLine();
-            out.writeUTF(userInput);
+            if (userInput.length() < 80) {
+                out.writeUTF(userInput);
+            } else {
+                throw new ArithmeticException("Your input must have a length less than 80.");
+            }
             System.out.println("Response from server: reverse " + in.readUTF());
         } catch (UnknownHostException e) {
             System.out.println("Socket: " + e.getMessage());
