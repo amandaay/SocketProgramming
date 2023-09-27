@@ -30,6 +30,7 @@ public class TCPClient {
             System.out.println("Enter text to be reversed: ");
             String userInput = System.console().readLine();
             if (userInput.length() < 80) {
+                // check if length is less than 80 per instructions
                 out.writeUTF(userInput);
             } else {
                 throw new ArithmeticException("Your input must have a length less than 80.");

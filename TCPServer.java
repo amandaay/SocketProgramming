@@ -14,6 +14,7 @@ public class TCPServer {
             System.out.println("TCP usage: java TCPServer <Port Number>");
             System.exit(1);
         }
+        // Cast arg to integer
         int ServerPort = Integer.parseInt(args[0]);
         try {
             System.out.println("Starting the server:");
@@ -22,6 +23,7 @@ public class TCPServer {
             // Wait and accept a connection
             Socket clientSocket = listenSocket.accept();
             Connection c = new Connection(clientSocket);
+            // close listening Socket
             listenSocket.close();
         } catch (IOException e) {
             System.out.println("Listen: " + e.getMessage());
@@ -35,7 +37,7 @@ class Connection extends Thread {
     public Connection(Socket aClientSocket) {
         try {
             clientSocket = aClientSocket;
-            // CreateI/O streams for communicating with the server.
+            // Create I/O streams for communicating with the server.
             in = new DataInputStream(clientSocket.getInputStream());
             out = new DataOutputStream(clientSocket.getOutputStream());
             this.start();
@@ -67,18 +69,21 @@ class Connection extends Thread {
 
     private static String ReversedString(String data) {
         char [] charArr = data.toCharArray();
+        // String builder for reversed string
         StringBuilder ReversedStr = new StringBuilder();
         for (int i = charArr.length - 1; i > - 1; i--) {
             if (Character.isUpperCase(charArr[i])) {
                 // if it's an upper case then lower it
                 ReversedStr.append(Character.toLowerCase(charArr[i]));
             } else if (Character.isLowerCase(charArr[i])) {
+                // if it's a lower case then cast it to upper case
                 ReversedStr.append(Character.toUpperCase(charArr[i]));
             } else {
                 // To account for white spaces
                 ReversedStr.append(charArr[i]);
             }
         }
+        // convert string builder to string
         return ReversedStr.toString();
     }
 }
