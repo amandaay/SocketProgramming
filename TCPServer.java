@@ -47,8 +47,7 @@ class Connection extends Thread {
         try { // an echo server
             String data = in.readUTF();
             // reverse and capitalize the string inputted from the client side
-            StringBuilder reverseData = new StringBuilder(data);
-            String reverseCapitalize = reverseData.reverse().toString().toUpperCase();
+            String reverseCapitalize = ReversedString(data);
             // write it out to the client side
             out.writeUTF(reverseCapitalize);
         } catch (EOFException e) {
@@ -64,5 +63,22 @@ class Connection extends Thread {
                 /* close failed */
             }
         }
+    }
+
+    private static String ReversedString(String data) {
+        char [] charArr = data.toCharArray();
+        StringBuilder ReversedStr = new StringBuilder();
+        for (int i = charArr.length - 1; i > - 1; i--) {
+            if (Character.isUpperCase(charArr[i])) {
+                // if it's an upper case then lower it
+                ReversedStr.append(Character.toLowerCase(charArr[i]));
+            } else if (Character.isLowerCase(charArr[i])) {
+                ReversedStr.append(Character.toUpperCase(charArr[i]));
+            } else {
+                // To account for white spaces
+                ReversedStr.append(charArr[i]);
+            }
+        }
+        return ReversedStr.toString();
     }
 }
